@@ -31,7 +31,8 @@ def get_catlapse(input_vector, ibm=False):
 	"""
 	result = {}
 	if ibm:
-		IBMQ.enable_account('1d4d99cccb3d406da3580c6dfe20a681169b7d76f14fa11bbc34868c3f6b3988a911bd6bab95e012d2c829901a894b45b2d47432431a252cb5d6f3a84d700245')
+		IBMQ_KEY = os.environ.get('IBM_Q_SECRET_KEY')
+		IBMQ.enable_account(IBMQ_KEY)
 		backend = IBMQ.get_backend('ibmq_16_melbourne')
 		logger.info(backend.status())
 		logger.info(backend.name())
