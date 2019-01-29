@@ -23,9 +23,9 @@ def index(request):
                 if str(i+1) in boxed_cats:
                     cat_choices += '1'
                 else:
-                    catchoices += '0'
-        QuantumCats = QuantumCats.objects.create(cat_choices=cat_choices)
-        QuantumCats.save()
+                    cat_choices += '0'
+        cat = QuantumCats.objects.create(cat_choices=cat_choices)
+        cat.save()
         return redirect('catlapse')
 
     probs, cov = get_catangle(num)
@@ -42,9 +42,9 @@ def index(request):
 
 def catlapse(request):
     latest_cats = QuantumCats.objects.latest('id')
-    catchoices = latest_cats.catchoices
+    cat_choices = latest_cats.cat_choices
 
-    cat_statuses = get_catlapse(catchoices, IBM_Q)
+    cat_statuses = get_catlapse(cat_choices, IBM_Q)
 
     cats = QuantumCat.objects
     boxed_cats = []

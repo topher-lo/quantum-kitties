@@ -119,8 +119,6 @@ def get_entangle_results(n, pairs):
     qp.measure(qr,cr)
 
     print(qp.draw())
-    qp.draw(output='latex_source', filename="entanglement.tex")
-    os.system("pdflatex entanglement.tex")
 
     backend=BasicAer.get_backend('qasm_simulator')
     job = execute(qp,backend)

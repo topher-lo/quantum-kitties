@@ -13,7 +13,7 @@
       <form class="container" action="" method="post">
         {% csrf_token %}
         <div class="columns is-multiline">
-          {% for name, id, prob in entangled_kitties %}
+          {% for name, id, prob in entangled_cats %}
           <div class="column is-one-quarter">
             <div id="kitty-{{id}}" class="card equal-height" style="padding-top: 2rem;">
               <div style="position:relative; z-index:2" class="card-image is-flex is-hcenter">
