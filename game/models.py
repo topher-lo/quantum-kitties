@@ -9,7 +9,7 @@ class QuantumCat(models.Model):
         return self.name
 
 class QuantumCats(models.Model):
-    catchoices = models.CharField(max_length=14)
+    cat_choices = models.CharField(max_length=14)
 
     def __str__(self):
-        return self.catchoices
+        return self.cat_choices

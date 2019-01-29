@@ -1,0 +1,2 @@
+#Ignore everything in static/bulma folder
+static/bulma*
