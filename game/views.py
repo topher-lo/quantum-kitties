@@ -4,8 +4,7 @@ from django.shortcuts import render, redirect
 from django import forms
 
 from .models import QuantumCat, QuantumCats
-from .qis_func import qiskit_catlapse
-from .rand_ent import entangled_probs
+from .qiskit import get_catlapse, get_catangle
 
 IBM_Q = False
 
@@ -16,44 +15,44 @@ def index(request):
     if request.method == "POST":
         boxed_cats = list(request.POST)
         boxed_cats.remove('csrfmiddlewaretoken')
-        catchoices = ''
+        cat_choices = ''
         if not(boxed_cats):
-            catchoices = '0'*num
+            cat_choices = '0'*num
         else:
             for i in range(num):
                 if str(i+1) in boxed_cats:
-                    catchoices += '1'
+                    cat_choices += '1'
                 else:
                     catchoices += '0'
-        QuantumCats = QuantumCats.objects.create(catchoices=catchoices)
+        QuantumCats = QuantumCats.objects.create(cat_choices=cat_choices)
         QuantumCats.save()
         return redirect('catlapse')
 
-    probs, cov = entangled_probs(num)
+    probs, cov = get_catangle(num)
 
-    kitties = QuantumCat.objects
-    entangled_kitties = []
+    cats = QuantumCat.objects
+    entangled_cats = []
     for id in probs:
-        name = kitties.get(id=id+1).name
+        name = cats.get(id=id+1).name
         prob = probs[id] * 10
-        entangled_kitties.append((name, id+1, prob))
-    context = {'entangled_kitties': entangled_kitties}
+        entangled_cats.append((name, id+1, prob))
+    context = {'entangled_cats': entangled_cats}
     return render(request, 'game/index.html', context)
 
 
 def catlapse(request):
-    latest_kitties = QuantumCats.objects.latest('id')
-    catchoices = latest_kitties.catchoices
+    latest_cats = QuantumCats.objects.latest('id')
+    catchoices = latest_cats.catchoices
 
-    catstatuses = qis_catlapse(catchoices, IBM_Q)
+    cat_statuses = get_catlapse(catchoices, IBM_Q)
 
-    kitties = QuantumCat.objects
-    boxed_kitties = []
-    for id in catstatuses:
-        name = kitties.get(id=id+1).name
-        boxed_kitties.append((name, catstatuses[id], id+1))
+    cats = QuantumCat.objects
+    boxed_cats = []
+    for id in cat_statuses:
+        name = cats.get(id=id+1).name
+        boxed_cats.append((name, cat_statuses[id], id+1))
 
-    context = {'boxed_kitties': boxed_kitties}
+    context = {'boxed_cats': boxed_cats}
     return render(request, 'game/catlapse.html', context)
 
 

@@ -24,7 +24,7 @@ logger.addHandler(log_handler)
 logger.setLevel(log_level)
 
 
-def catlapse(input_vector, ibm=False):
+def get_catlapse(input_vector, ibm=False):
 	"""
 	Input: 14 length binary string (which cats chosen)
 	Output: 14 length binary string (which cats dies or lives)
@@ -174,7 +174,7 @@ def find_pairs(results):
     return thepairs
 
 
-def catangle(n):
+def get_catangle(n):
     pairs = randomize_pairs_ibmq()
     results = get_entangle_results(n, pairs)
     res, adja = calculate_probs(n, results)
