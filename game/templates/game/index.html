@@ -1,0 +1,70 @@
+{% extends 'game/extensions/base.html' %}
+
+{% block content %}
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="text" style="margin-bottom: 3rem">
+        <h1 class="title has-text-centered" style="font-size: 4rem;">
+          QUANTUM KITTIES 🐱⚰️
+        </h1>
+        <h1 class="subtitle is-1 has-text-centered" style="margin-top: 1rem">>>>  Powered by IBM  <<<</h1>
+      </div>
+      <form class="container" action="" method="post">
+        {% csrf_token %}
+        <div class="columns is-multiline">
+          {% for name, id, prob in entangled_kitties %}
+          <div class="column is-one-quarter">
+            <div id="kitty-{{id}}" class="card equal-height" style="padding-top: 2rem;">
+              <div style="position:relative; z-index:2" class="card-image is-flex is-hcenter">
+                <img class="image is-96x96" style="filter: saturate({{ prob }});" src="/static/img/k1.png" alt="Placeholder image">
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content has-text-centered">
+                    <p class="title is-5">{{ name }}</p>
+                    <p class="subtitle is-5">#{{ id }}</p>
+                  </div>
+                </div>
+                <div class="content has-text-centered">
+                  <input onclick="checkbox_btn('kitty-{{id}}')" type="checkbox" name="{{ id }}" value="boxed">
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="control is-flex is-hcenter" style="margin:3rem">
+          <button type="submit" class="button is-success is-large">Schrodingerise!</button>
+        </div>
+      </form>
+      <div class="container" style="margin-top: 2rem">
+        <h2 class="title is-3 has-text-centered">
+          IBM Quantum Devices:
+        </h2>
+        <h3 class="title is-1 has-text-centered">
+           2/3 Active
+           <div class="text">
+             <div class="select" style="transform: scale(0.5)">
+               <select>
+                 <option value="ibmq_16_melbourne">ibmq_16_melbourne</option>
+                 <option value="ibmq_5_tenerife">ibmq_5_tenerife</option>
+               </select>
+             </div>
+           </div>
+        </h3>
+        <img src="/static/img/ibm.png" alt="ibmq_16_melbourne">
+        <img src="/static/img/ibm2.png" alt="ibmq_5_tenerife" style="margin-top: 4rem">
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+function checkbox_btn(id){
+  document.getElementById(id).style.background = 'None';
+  document.getElementById(id).style.background = 'Black';
+  document.getElementById(id).style.filter = 'brightness(0%)';
+  document.getElementById(id).style.transform = 'scale(0.95)';
+};
+</script>
+{% endblock %}

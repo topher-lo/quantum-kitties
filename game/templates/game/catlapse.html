@@ -1,0 +1,58 @@
+{% extends 'game/extensions/base.html' %}
+
+{% block content %}
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="text" style="margin-bottom: 3rem">
+        <h1 class="title has-text-centered" style="font-size: 4rem;">
+          QUANTUM KITTIES 🐱⚰️
+        </h1>
+        <h1 class="subtitle is-1 has-text-centered" style="margin-top: 1rem">  Thanks IBM! </h1>
+      </div>
+      <div class="columns is-multiline is-flex is-hcenter">
+        {% for name, status, id in boxed_kitties %}
+          <div class="column is-one-quarter">
+            <div class="card equal-height" style="padding-top: 2rem;">
+              <div class="card-image is-flex is-hcenter">
+                {% if status == 'Alive' %}
+                  <img class="image is-128x128" src="/static/img/k1.png" alt="Placeholder image">
+                {% else %}
+                  <img class="image is-128x128" src="/static/img/kdead.png" style="transform: scale(1.1) rotate(-180deg); filter: invert(90%)" alt="Placeholder image">
+                {% endif %}
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content has-text-left">
+                    <p class="title is-5">{{ name }}</p>
+                    <p class="subtitle is-5">#{{ id }}</p>
+                  </div>
+                </div>
+                <div class="text has-text-right">
+                  <h2 class="title is-5">{{status}}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="container">
+        <div class="text">
+          <h3 class="subtitle is-4 has-text-centered" style="margin-top: 3rem">
+            According to the Laws of Quantum Mechanics, this random outcome was inevitable...
+          </h3>
+        </div>
+        <div class="control is-flex is-hcenter" style="margin:3rem">
+          <a href="/" class="button is-danger is-large">Try again anyway?</a>
+        </div>
+      </div>
+      <div class="text">
+        <h3 class="subtitle is-4 has-text-centered" style="margin-bottom: 1rem; margin-top: 5rem; text-decoration: underline">Quantum Entanglement Circuit</h3>
+      </div>
+      <div class="container is-flex is-hcenter">
+        <img src="/static/img/entanglement.png" style="height: 30rem" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
