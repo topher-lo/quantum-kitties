@@ -15,17 +15,23 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o9iki_b5mznl!_f6mu$2c%m@@!zv_2#4jh+z%8h0@=fq149n+m'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'kro=5#qd35zvy4^1aqq7(((c(-mplr$qxrr1%=)=0pcuz%bu2i')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+
+ALLOWED_HOSTS = ['localhost']
+
+SECURE_SSL_REDIRECT = bool(os.environ.get('SECURE', False))
+
+SECURE_HSTS_SECONDS = bool(os.environ.get('HSTS_SECONDS', None))
+
+SESSION_COOKIE_SECURE = bool(os.environ.get('SECURE', False))
+
+CSRF_COOKIE_SECURE = bool(os.environ.get('SECURE', False))
 
 
 # Application definition
@@ -37,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'game',
+    'bulma',
 ]
 
 MIDDLEWARE = [
@@ -116,5 +124,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+import os
+ROOT_PATH = os.path.dirname(__file__)
+STATICFILES_DIRS = [os.path.join(ROOT_PATH, 'static')]
 
+# The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
