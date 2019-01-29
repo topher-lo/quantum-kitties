@@ -1,2 +1,3 @@
-#Ignore everything in static/bulma folder
-static/bulma*
+* linguist-vendored
+*.py linguist-vendored=false
+*.html linguist-vendored=false
