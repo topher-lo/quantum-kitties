@@ -1,2 +1,2 @@
 # quantum-kitties
-Quantum kitties in-browser game created for ICHack 19.
+Quantum Kittens browser game created for ICHack 19.
