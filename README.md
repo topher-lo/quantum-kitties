@@ -1,7 +1,7 @@
 # Quantum Kitties
 A furry web-browser game that demonstrates quantum superposition and entanglement on IBM's quantum computer.
 
-The game was developed as a project at [ICHack19](https://ichack.org/). We placed 2nd in the "Best Newcomer Category".
+This game was developed at [ICHack19](https://ichack.org/). We placed 2nd in the "Best Newcomer Category".
 
 ## Inspiration
 We wanted to learn the fundementals of quantum computing and found the idea of putting "Schrödinger's cats" on the web hilarious.
