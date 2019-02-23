@@ -28,4 +28,4 @@ We learned the basics of quantum circuits.
 How to manipulate qubits via quantum circuit gates and build simple quantum programs. 
 
 ## What’s next for Quantum Kitties
-Benevolent dictatorship: twins are spared the horror of Schrödinger's black box if the player picks both twins to be put into superposition.
+Benevolent dictatorship: twins are spared the horror of Schrödinger's black box.
