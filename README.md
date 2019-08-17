@@ -1,5 +1,7 @@
 # Quantum Kitties
-A furry web-browser game that demonstrates quantum superposition and entanglement on IBM's quantum computer.
+![alt-text](https://github.com/topher-lo/quantum-kitties/blob/master/quantumcats/static/img/k1.png)
+
+A furry web-browser game that demonstrates quantum superposition and entanglement on IBM's quantum computer. 
 
 This game was developed at [ICHack19](https://ichack.org/). We placed 2nd in the "Best Newcomer Category".
 
