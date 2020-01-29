@@ -3,7 +3,9 @@
 
 A furry web-browser game that demonstrates quantum superposition and entanglement on IBM's quantum computer. 
 
-This game was developed at [ICHack19](https://ichack.org/). We placed 2nd in the "Best Newcomer Category".
+This game was developed at [ICHack19](https://ichack.org/) ([Devpost link](https://devpost.com/software/quantum-kitties-iy3r2e)). We placed 2nd in the "Best Newcomer Category".
+
+![presenting on stage](https://live.staticflickr.com/4908/46974143822_3b40449513_w_d.jpg)
 
 ## Inspiration
 We wanted to learn the fundementals of quantum computing and found the idea of putting "Schrödinger's cats" on the web hilarious.
