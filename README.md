@@ -7,6 +7,8 @@ This game was developed at [ICHack19](https://ichack.org/) ([Devpost link](https
 
 ![presenting on stage](https://live.staticflickr.com/4908/46974143822_3b40449513_w_d.jpg)
 
+You can play with the demo at : [http://quantum-kitties.herokuapp.com/](http://quantum-kitties.herokuapp.com/)
+
 ## Inspiration
 We wanted to learn the fundementals of quantum computing and found the idea of putting "Schrödinger's cats" on the web hilarious.
 

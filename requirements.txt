@@ -1,0 +1,6 @@
+django
+django-bulma
+django-heroku
+gunicorn
+matplotlib
+qiskit
