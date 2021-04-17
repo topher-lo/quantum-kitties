@@ -16,12 +16,12 @@ We wanted to learn the fundementals of quantum computing and found the idea of p
 1) Each quantum kitty is represented by 3 qubits. 
 2) At the start of the game, random pairs ("twins") of kitties are entangled.
 3) The player chooses quantum kittens to put into Schrödinger's quantum black box, i.e. to put these kittens into superposition.
-4) Backend builds a quantum circuits to entangle kitty twins and put choosen kitties into superposition.
+4) Backend builds a quantum circuit to entangle kitty twins and put chosen kitties into superposition.
 5) Sends circuit instructions either to IBM's quantum simulator or one of IBM Q's three working quantum computers.
 6) Measure the kitties in superposition to find out if the chosen kitties collapsed into a "dead" or "alive" state.
 
 ## How we built it
-Front-end: HTML, Bulma (CSS Framework), (some) Javascript
+Front-end: HTML, Bulma (CSS Framework), (some) Javascript  
 Back-end: Python on Django, QISkit, Matplotlib
 
 ## Challenges we ran into
