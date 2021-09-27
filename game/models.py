@@ -8,6 +8,7 @@ class QuantumCat(models.Model):
     def __str__(self):
         return self.name
 
+
 class QuantumCats(models.Model):
     cat_choices = models.CharField(max_length=14)
 

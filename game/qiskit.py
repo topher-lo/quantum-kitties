@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 #### Set up logger
 logger = logging.getLogger(__name__)
-formatter = logging.Formatter('[%(levelname)s] %(name)s - %(message)s')
+formatter = logging.Formatter("[%(levelname)s] %(name)s - %(message)s")
 log_handler = logging.StreamHandler(sys.stdout)
 log_handler.setFormatter(formatter)
 log_level = logging.DEBUG
@@ -25,104 +25,105 @@ logger.setLevel(log_level)
 
 
 def get_catlapse(input_vector, ibm=False):
-	"""
-	Input: 14 length binary string (which cats chosen)
-	Output: 14 length binary string (which cats dies or lives)
-	"""
-	result = {}
-	if ibm:
-		IBMQ_KEY = os.environ.get('IBM_Q_SECRET_KEY')
-		IBMQ.enable_account(IBMQ_KEY)
-		backend = IBMQ.get_backend('ibmq_16_melbourne')
-		logger.info(backend.status())
-		logger.info(backend.name())
-	else:
-		# Use Aer's qasm_simulator
-		backend = BasicAer.get_backend('qasm_simulator')
-		logger.info(backend.status())
-	for x in range(len(input_vector)):
-		if input_vector[x] == "1":
-			# Create a Quantum Register with 3 qubits.
-			q = QuantumRegister(3, 'q')
+    """
+    Input: 14 length binary string (which cats chosen)
+    Output: 14 length binary string (which cats dies or lives)
+    """
+    result = {}
+    if ibm:
+        IBMQ_KEY = os.environ.get("IBM_Q_SECRET_KEY")
+        IBMQ.enable_account(IBMQ_KEY)
+        backend = IBMQ.get_backend("ibmq_16_melbourne")
+        logger.info(backend.status())
+        logger.info(backend.name())
+    else:
+        # Use Aer's qasm_simulator
+        backend = BasicAer.get_backend("qasm_simulator")
+        logger.info(backend.status())
+    for x in range(len(input_vector)):
+        if input_vector[x] == "1":
+            # Create a Quantum Register with 3 qubits.
+            q = QuantumRegister(3, "q")
 
-			# Create a Quantum Circuit acting on the q register
-			circ = QuantumCircuit(q)
+            # Create a Quantum Circuit acting on the q register
+            circ = QuantumCircuit(q)
 
-			# Create the GHZ state...
+            # Create the GHZ state...
 
-			# Add a H gate on qubit 0, putting this qubit in superposition.
-			circ.h(q[0])
-			# Add a CX (CNOT) gate on control qubit 0 and target qubit 1, putting
-			# the qubits in a Bell state.
-			circ.cx(q[0], q[1])
-			# Add a CX (CNOT) gate on control qubit 0 and target qubit 2, putting
-			# the qubits in a GHZ state.
-			circ.cx(q[0], q[2])
+            # Add a H gate on qubit 0, putting this qubit in superposition.
+            circ.h(q[0])
+            # Add a CX (CNOT) gate on control qubit 0 and target qubit 1, putting
+            # the qubits in a Bell state.
+            circ.cx(q[0], q[1])
+            # Add a CX (CNOT) gate on control qubit 0 and target qubit 2, putting
+            # the qubits in a GHZ state.
+            circ.cx(q[0], q[2])
 
+            # Create a Classical Register with 3 bits.
+            c = ClassicalRegister(3, "c")
+            # Create a Quantum Circuit
+            meas = QuantumCircuit(q, c)
+            meas.barrier(q)
+            # map the quantum measurement to the classical bits
+            meas.measure(q, c)
 
-			# Create a Classical Register with 3 bits.
-			c = ClassicalRegister(3, 'c')
-			# Create a Quantum Circuit
-			meas = QuantumCircuit(q, c)
-			meas.barrier(q)
-			# map the quantum measurement to the classical bits
-			meas.measure(q,c)
+            # The Qiskit circuit object supports composition using
+            # the addition operator.
+            circuits = []
+            qc = circ + meas
+            print(qc.draw())
 
-			# The Qiskit circuit object supports composition using
-			# the addition operator.
-			circuits = []
-			qc = circ+meas
-			print(qc.draw())
+            # Execute the circuit on the qasm simulator.
+            job = execute(qc, backend, shots=1)
+            logger.info(job.status())
 
-			# Execute the circuit on the qasm simulator.
-			job = execute(qc, backend, shots=1)
-			logger.info(job.status())
+            # Grab the results from the job.
+            job_result = job.result()
 
-			# Grab the results from the job.
-			job_result = job.result()
+            if "000" in job_result.get_counts():
+                result[x] = "Alive"
+            else:
+                result[x] = "Dead"
 
-			if "000" in job_result.get_counts():
-				result[x] = "Alive"
-			else:
-				result[x] = "Dead"
-
-	return result
+    return result
 
 
 def randomize_pairs_ibmq():
     pairs = []
-    for i in range(1,7):
+    for i in range(1, 7):
         index1 = i
-        flip = random.sample([0,1], 1)
-        if flip[0] and (not(pairs) or i not in pairs[-1]):
-            pairs.append((index1, i+1))
+        flip = random.sample([0, 1], 1)
+        if flip[0] and (not (pairs) or i not in pairs[-1]):
+            pairs.append((index1, i + 1))
     return pairs
 
 
 def get_entangle_results(n, pairs):
     qr = QuantumRegister(2)
     cr = ClassicalRegister(2)
-    qp = QuantumCircuit(qr,cr)
+    qp = QuantumCircuit(qr, cr)
 
-    qp.rx( np.pi/2,qr[0])
-    qp.cx(qr[0],qr[1])
+    qp.rx(np.pi / 2, qr[0])
+    qp.cx(qr[0], qr[1])
 
-    qp.measure(qr,cr)
+    qp.measure(qr, cr)
 
     qr = QuantumRegister(n)
     cr = ClassicalRegister(n)
-    qp = QuantumCircuit(qr,cr)
+    qp = QuantumCircuit(qr, cr)
 
     for pair in pairs:
-        qp.ry((1+2*random.random())*np.pi/4,qr[pair[0]]) # angle generated randonly between pi/4 and 3pi/4
-        qp.cx(qr[pair[0]],qr[pair[1]])
+        qp.ry(
+            (1 + 2 * random.random()) * np.pi / 4, qr[pair[0]]
+        )  # angle generated randonly between pi/4 and 3pi/4
+        qp.cx(qr[pair[0]], qr[pair[1]])
 
-    qp.measure(qr,cr)
+    qp.measure(qr, cr)
 
     print(qp.draw())
 
-    backend=BasicAer.get_backend('qasm_simulator')
-    job = execute(qp,backend)
+    backend = BasicAer.get_backend("qasm_simulator")
+    job = execute(qp, backend)
     results = job.result().get_counts()
     return results
 
@@ -142,22 +143,21 @@ def calculate_probs(n, raw_stats):
         Z += raw_stats[string]
     stats = {}
     for string in raw_stats:
-        stats[string] = raw_stats[string]/Z
-
+        stats[string] = raw_stats[string] / Z
 
     probs = {}
     adja = []
-    for i in range(0,n):
+    for i in range(0, n):
         adja += [[0] * n]
-    for n in range(0,n):
+    for n in range(0, n):
         probs[n] = 0
 
     for string in stats:
         for n in range(n):
-            if string[n]=='1':
+            if string[n] == "1":
                 probs[n] += stats[string]
-        for i in range(0,n):
-            for j in range(0,n):
+        for i in range(0, n):
+            for j in range(0, n):
                 if string[i] != string[j]:
                     adja[i][j] += 1
 
@@ -166,10 +166,10 @@ def calculate_probs(n, raw_stats):
 
 def find_pairs(results):
     thepairs = []
-    for i in range(0,len(res)-1):
-        for j in range(i+1,len(res)):
+    for i in range(0, len(res) - 1):
+        for j in range(i + 1, len(res)):
             if abs(res[i] - res[j]) < 10 ** (-5):
-                thepairs += [(i,j)]
+                thepairs += [(i, j)]
     return thepairs
 
 
